@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/sample_sprite.png" type="Texture" id=1]
+[ext_resource path="res://SampleCharacter.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 15 )
+
+[node name="SampleCharacter" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -15, -21 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 1, -4 )
+shape = SubResource( 1 )
+
+[connection signal="input_event" from="." to="." method="_on_SampleCharacter_input_event"]
