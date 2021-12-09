@@ -1,4 +1,5 @@
 # Represents the game board.
+# Base code derived from https://www.gdquest.com/tutorial/godot/2d/tactical-rpg-movement/
 class_name Grid
 extends Resource
 
@@ -11,22 +12,17 @@ export var tile_size := Vector2(32, 16);
 var _tile_size_half := tile_size / 2;
 
 
-
 # Returns the center of a tile.
-func calculate_map_pos(tile: Vector2) -> Vector2:
-	#return grid_pos * tile_size + (tile_size / 2);
-
+func calculate_map_pos(tile_coords: Vector2) -> Vector2:
 	# Math grabbed from http://clintbellanger.net/articles/isometric_math/
-	var map_x = (tile.x - tile.y) * _tile_size_half.x; 
-	var map_y = (tile.x + tile.y) * _tile_size_half.y;
+	var map_x = (tile_coords.x - tile_coords.y) * _tile_size_half.x; 
+	var map_y = (tile_coords.x + tile_coords.y) * _tile_size_half.y;
 
 	return Vector2(map_x, map_y);
 
 
-# Returns the coordinates of the tile.
-func calculate_grid_coords(map_pos: Vector2) -> Vector2:
-	#return (map_pos / tile_size).floor();
-
+# Returns the coordinates of the tile based off of map position.
+func calculate_tile_coords(map_pos: Vector2) -> Vector2:
 	# Math grabbed from http://clintbellanger.net/articles/isometric_math/
 	var grid_x = (map_pos.x / _tile_size_half.x + (map_pos.y / _tile_size_half.y)) / 2;
 	var grid_y = (map_pos.y / _tile_size_half.y - (map_pos.x / _tile_size_half.x)) / 2;
@@ -40,14 +36,14 @@ func is_within_bounds(tile_coords: Vector2) -> bool:
 	return out and tile_coords.y >= 0 and tile_coords.y < grid_size.y;
 
 
-# Makes 'grid_pos' fit within grid's bounds.
-func clamp(grid_pos: Vector2) -> Vector2:
-	var out := grid_pos
-	out.x = clamp(out.x, 0, grid_size.x - 1.0)
-	out.y = clamp(out.y, 0, grid_size.y - 1.0)
-	return out
+# Makes 'tile_coords' fit within grid's bounds.
+func clamp(tile_coords: Vector2) -> Vector2:
+	var out := tile_coords;
+	out.x = clamp(out.x, 0, grid_size.x - 1.0);
+	out.y = clamp(out.y, 0, grid_size.y - 1.0);
+	return out;
 
 
 # Converts 2D coords into 1D array index.
 func as_index(tile: Vector2) -> int:
-	return int(tile.x + grid_size.x * tile.y)
+	return int(tile.x + grid_size.x * tile.y);

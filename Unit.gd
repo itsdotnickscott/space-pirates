@@ -28,7 +28,7 @@ func _ready() -> void:
 	set_process(false);
 
 	# Snap unit to tile.
-	self.tile = Grid.calculate_grid_coords(position);
+	self.tile = Grid.calculate_tile_coords(position);
 	position = Grid.calculate_map_pos(tile);
 
 	if not Engine.editor_hint:
@@ -40,8 +40,8 @@ func _ready() -> void:
 		Vector2(2, 5),
 		Vector2(8, 5),
 		Vector2(8, 7),
-	]
-	walk_along(PoolVector2Array(points))
+	];
+	walk_along(PoolVector2Array(points));
 
 
 # When active, moves unit along a "curve".
