@@ -35,14 +35,6 @@ func _ready() -> void:
 		# Create curve resource here because creating it in the editor prevents movement.
 		curve = Curve2D.new();
 
-	var points := [
-		Vector2(2, 2),
-		Vector2(2, 5),
-		Vector2(8, 5),
-		Vector2(8, 7),
-	];
-	walk_along(PoolVector2Array(points));
-
 
 # When active, moves unit along a "curve".
 func _process(delta: float) -> void:
